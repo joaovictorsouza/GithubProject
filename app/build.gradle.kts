@@ -8,9 +8,11 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
+
 android {
     namespace = "br.eng.joaovictor.ghproject"
     compileSdk = 33
+    buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "br.eng.joaovictor.ghproject"
@@ -35,6 +37,12 @@ android {
             )
         }
     }
+
+    buildTypes.forEach {
+        it.buildConfigField("String", "GITHUB_API_URL", extra["GitHubApiURL"].toString())
+        it.buildConfigField("String", "GITHUB_API_KEY", extra["GitHubApiKey"].toString())
+    }
+
     kotlinOptions {
         jvmTarget = "17"
 
@@ -77,6 +85,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.windowssize)
     implementation(libs.compose.viewmodels)
+    implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.hilt.navigation.compose)
@@ -85,4 +94,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
+    implementation(libs.okhttp.interceptor)
+    implementation(libs.coil.compose)
 }

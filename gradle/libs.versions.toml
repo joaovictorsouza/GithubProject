@@ -13,11 +13,13 @@ kapt = "1.8.10"
 compose-bom = "2023.05.01"
 compose-material3 = "1.1.0"
 compose-ui = "1.4.3"
-compose-viewmodels = "2.6.1"
+compose = "2.6.1"
+compose-navigation = "2.5.3"
 lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.1"
-
-
+retrofit = "2.9.0"
+okhttp = "4.9.1"
+coil = "2.3.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -39,12 +41,18 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-ui" }
-compose-viewmodels = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodels" }
+compose-viewmodels = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation"}
 compose-windowssize = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
+retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
+okhttp-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp"}
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
