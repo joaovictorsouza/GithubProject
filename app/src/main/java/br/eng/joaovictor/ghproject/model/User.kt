@@ -7,5 +7,6 @@ data class User(
     val login: String,
     val name: String,
     @SerializedName("avatar_url")
-    val avatarUrl: String
+    val avatarUrl: String,
+    val bio : String?
 )

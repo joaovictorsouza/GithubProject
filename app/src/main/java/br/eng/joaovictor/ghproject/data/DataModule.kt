@@ -16,7 +16,10 @@ import dagger.Provides
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataModule {
+open class DataModule {
+
+    open fun getBaseUrl() : String = BuildConfig.GITHUB_API_URL
+
     @Singleton
     @Provides
     fun provideRetrofit(): UserService {
@@ -35,7 +38,7 @@ class DataModule {
         return Retrofit.Builder()
             .client(builder.build())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BuildConfig.GITHUB_API_URL)
+            .baseUrl(getBaseUrl())
             .build()
             .create(UserService::class.java)
     }

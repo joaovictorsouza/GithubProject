@@ -8,6 +8,13 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
+//java.sourceSets["test"].java {
+//    srcDir("src/sharedTest/java")
+//}
+//
+//java.sourceSets["androidTest"].java {
+//    srcDir("src/sharedTest/java")
+//}
 
 android {
     namespace = "br.eng.joaovictor.ghproject"
@@ -21,12 +28,15 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "br.eng.joaovictor.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
+    sourceSets["test"].java{
+        srcDir("src/sharedTest/java")
+    }
 
     buildTypes {
         release {
@@ -69,7 +79,6 @@ android {
 
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -79,6 +88,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
+    implementation(libs.androidx.window)
     androidTestImplementation(platform(libs.compose.bom))
     kapt(libs.hilt.compiler)
     implementation(platform(libs.compose.bom))
@@ -90,6 +100,7 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.hilt.navigation.compose)
     androidTestImplementation(libs.compose.ui.test)
+    testImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.test.manifest)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -98,4 +109,7 @@ dependencies {
     implementation(libs.retrofit.converter)
     implementation(libs.okhttp.interceptor)
     implementation(libs.coil.compose)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+    androidTestImplementation(libs.mockWebServer)
 }

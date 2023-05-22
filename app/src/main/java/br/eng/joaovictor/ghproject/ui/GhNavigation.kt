@@ -5,16 +5,18 @@ import androidx.navigation.NavHostController
 
 object GhDestinations{
     const val HOME_ROUTE = "home"
+    const val USER_ROUTE = "user"
 }
 
 class GhNavigationActions(navController: NavHostController) {
     val navigateToHome: () -> Unit = {
         navController.navigate(GhDestinations.HOME_ROUTE) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
             launchSingleTop = true
             restoreState = true
         }
+    }
+
+     val navigateToUser: (user: String?) -> Unit = {
+        navController.navigate(GhDestinations.USER_ROUTE)
     }
 }

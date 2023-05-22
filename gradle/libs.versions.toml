@@ -52,6 +52,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
 okhttp-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp"}
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+androidx-window = { group = "androidx.window", name = "window", version = "1.0.0" }
+mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version = "4.9.3" }
 
 
 [plugins]
