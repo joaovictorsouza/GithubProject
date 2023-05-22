@@ -1,8 +1,3 @@
-**Índice**
-
-[TOCM]
-
-[TOC]
 
 ### Sobre
 Projeto desenvolvido para concorrer a uma vaga. Lista usuários da API do Github, busca detalhes de um usuário e os seus repositórios. 
