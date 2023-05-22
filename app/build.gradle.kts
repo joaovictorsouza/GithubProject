@@ -28,7 +28,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "br.eng.joaovictor.CustomTestRunner"
+        testInstrumentationRunner = "br.eng.joaovictor.ghproject.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -75,7 +75,16 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    testOptions {
+        packaging {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+    }
 }
+
 
 
 dependencies {
@@ -89,7 +98,6 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.androidx.window)
-    androidTestImplementation(platform(libs.compose.bom))
     kapt(libs.hilt.compiler)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.material3)
@@ -99,17 +107,28 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.hilt.navigation.compose)
-    androidTestImplementation(libs.compose.ui.test)
-    testImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.test.manifest)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
     implementation(libs.okhttp.interceptor)
     implementation(libs.coil.compose)
+    debugImplementation(libs.compose.ui.test.manifest)
+
+
+    //Testes
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.mockWebServer)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines)
+
+    //Testes de Integracão
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.compiler)
     androidTestImplementation(libs.mockWebServer)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.kotlinx.coroutines)
 }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.util.logging.Logger
 import javax.inject.Inject
 
@@ -32,37 +33,33 @@ class HomeViewModel @Inject constructor(private val usersRepository: UsersReposi
 
     val users : MutableStateFlow<List<User>> = MutableStateFlow<List<User>>(listOf())
     var isLoading = mutableStateOf(false)
-    var errorMessage : MutableState<String?> = mutableStateOf(null)
+    var errorMessage : MutableState<String> = mutableStateOf("")
 
 
-    suspend fun getUserData(){
+    suspend fun getUserData(since : Int? = null){
         viewModelScope.launch {
-            usersRepository.getUsers()
-                .flowOn(Dispatchers.IO)
-                .catch { e ->
-                    errorMessage.value = e.message
+            isLoading.value = true
+            try {
+                val response = usersRepository.getUsers(since)
+                response.collect {
+                    users.emit(users.value.plus(it))
                 }
-                .collect {
-                    users.emit(it)
-                }
+            } catch (e: IOException) {
+                errorMessage.value = "Erro de conexão com o servidor"
+                // Log the specific error if needed
+            } catch (e: Exception) {
+                errorMessage.value = "Erro desconhecido ao listar usuários"
+                // Log the specific error if needed
+            }finally {
+                isLoading.value = false
+            }
         }
  }
 
-    fun fetchMoreItems(){
-        viewModelScope.launch {
-            if(users.value.isNotEmpty()) {
-                val since = users.value.last().id
-                usersRepository.getUsers(since)
-                    .flowOn(Dispatchers.IO)
-                    .catch { e ->
-                        errorMessage.value = e.message
-                    }
-                    .collect {
-                        users.emit(
-                            users.value.plus(it)
-                        )
-                    }
-            }
+    suspend fun fetchMoreItems(){
+        if(users.value.isNotEmpty()) {
+            val since = users.value.last().id
+            getUserData(since)
         }
     }
 

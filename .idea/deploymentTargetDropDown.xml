@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="GhAppTest">
-        <State />
-      </entry>
       <entry key="HomeScreenTest">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
@@ -13,13 +10,25 @@
               <deviceKey>
                 <Key>
                   <type value="SERIAL_NUMBER" />
-                  <value value="adb-9bc51618-nKzsJ7._adb-tls-connect._tcp." />
+                  <value value="adb-RQCT202D4FM-Y6ibFt._adb-tls-connect._tcp." />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-22T02:08:14.830809Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-05-22T08:38:36.255689Z" />
         </State>
+      </entry>
+      <entry key="HomeViewModelTest (1)">
+        <State />
+      </entry>
+      <entry key="HomeViewModelTest.getUserData should set error message when fetching users data fails">
+        <State />
+      </entry>
+      <entry key="UserViewModelTest">
+        <State />
+      </entry>
+      <entry key="UserViewModelTest.getUserRepos should append repos to userRepos when successful">
+        <State />
       </entry>
       <entry key="app">
         <State>
@@ -34,11 +43,8 @@
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-22T04:59:44.182748Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-05-22T07:29:45.279555Z" />
         </State>
-      </entry>
-      <entry key="test_home_screen()">
-        <State />
       </entry>
     </value>
   </component>

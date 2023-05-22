@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -69,7 +70,8 @@ fun UserScreen(
         TwoPaneScreen(modifier = modifier,
             pane1 = {
                 if (viewModel.userDetails.value != null) {
-                    UserDetailsCard(user = viewModel.userDetails.value!!)
+                    UserDetailsCard(user = viewModel.userDetails.value!!,
+                        isLoading = viewModel.isLoadingUser.value)
                 }
             },
             pane2 = {
@@ -84,14 +86,16 @@ fun UserScreen(
                         )
                     },
                     state = gridState,
-                    repos = repos
+                    repos = repos,
+                    isLoading = viewModel.isLoadingRepo.value
                 )
             })
     } else {
         RepositoryList(
             modifier = modifier,
             user = viewModel.userDetails.value,
-            repos = repos
+            repos = repos,
+            isLoading = viewModel.isLoadingUser.value || viewModel.isLoadingRepo.value
         )
     }
 
@@ -102,6 +106,7 @@ fun RepositoryGrid(
     title: @Composable () -> Unit,
     state: LazyGridState,
     repos: State<List<Repo>>,
+    isLoading: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -119,12 +124,24 @@ fun RepositoryGrid(
                 val item = repos.value[index]
                 RepoCard(item = item)
             }
+
+            if(isLoading) {
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 fun RepositoryList(
+    isLoading: Boolean,
     user: User?,
     repos: State<List<Repo>>,
     modifier: Modifier = Modifier
@@ -136,17 +153,29 @@ fun RepositoryList(
     ) {
         if (user != null) {
             item {
-                UserDetailsCard(user)
+                UserDetailsCard(user, isLoading = false)
             }
 
-            item {
-                Text(
-                    text = "${stringResource(id = R.string.repos_of)} ${user.name ?: ""}",
-                    modifier = Modifier.fillMaxWidth(),
-                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontFamily.SansSerif
-                )
+            if(isLoading) {
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+
+            if(!isLoading) {
+                item {
+                    Text(
+                        text = "${stringResource(id = R.string.repos_of)} ${user.name}",
+                        modifier = Modifier.fillMaxWidth(),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        fontWeight = FontWeight.Normal,
+                        fontFamily = FontFamily.SansSerif
+                    )
+                }
             }
 
             items(repos.value.size) { index ->
@@ -159,8 +188,16 @@ fun RepositoryList(
 
 
 @Composable
-fun UserDetailsCard(user: User) {
-    Card() {
+fun UserDetailsCard(user: User, isLoading: Boolean) {
+    Card {
+        if(isLoading){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()) {
+                    CircularProgressIndicator()
+                }
+        }
+
         BoxWithConstraints {
             val width = maxWidth.value.toInt()
             Column(modifier = Modifier.padding(all = 12.dp)) {

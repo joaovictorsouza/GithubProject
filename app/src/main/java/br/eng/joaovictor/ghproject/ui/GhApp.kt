@@ -3,6 +3,7 @@
 package br.eng.joaovictor.ghproject.ui
 
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,13 +17,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,6 +45,12 @@ fun GhApp(
     GithubProjectTheme {
         val navController = rememberNavController()
         val backStackEntry = navController.currentBackStackEntryAsState()
+        val isSearching = remember {
+            mutableStateOf(false)
+        }
+        var text by rememberSaveable { mutableStateOf("") }
+        var active by rememberSaveable { mutableStateOf(false) }
+
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -77,12 +89,14 @@ fun GhApp(
                             )
                         }
                     }
-
-                    GhNavGraph(
-                        modifier = Modifier.padding(it),
-                        navController = navController,
-                        widthSizeClass = widthSizeClass,
-                        navigateToUser = { user -> navController.navigate("${GhDestinations.USER_ROUTE}?login=${user}") })
+                    Column {
+                        GhNavGraph(
+                            modifier = Modifier.padding(it),
+                            navController = navController,
+                            widthSizeClass = widthSizeClass,
+                            navigateToUser = { user -> navController.navigate("${GhDestinations.USER_ROUTE}?login=${user}") }
+                        )
+                    }
                 }
             }
         }

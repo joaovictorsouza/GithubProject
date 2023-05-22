@@ -7,7 +7,7 @@ data class Repo(
     val name: String,
     @SerializedName("full_name")
     val fullName: String,
-    val description: String,
+    val description: String?,
     val language: String,
     val url: String
 )
